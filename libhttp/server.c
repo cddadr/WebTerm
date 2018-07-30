@@ -45,6 +45,10 @@
 
 #include "config.h"
 
+#ifdef OPENBSD
+#include <stdint.h>
+#endif /* OPENBSD */
+
 #include <arpa/inet.h>
 #include <fcntl.h>
 #include <netinet/in.h>

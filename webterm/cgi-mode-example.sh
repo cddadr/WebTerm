@@ -5,11 +5,11 @@
 
 case "${REQUEST_METHOD}" in
   POST)
-     # Retrieve CGI parameter, then start shellinabox with this command
+     # Retrieve CGI parameter, then start webterm with this command
      read parms
      parms="$(printf "$(echo "${parms}"|sed -e 's/%\(..\)/\\x\1/g;s/%/%%/g')")"
      parms="${parms#cmd=}"
-     shellinaboxd --cgi -t -s "/:$(id -u):$(id -g):HOME:${parms}"
+     webtermd --cgi -t -s "/:$(id -u):$(id -g):HOME:${parms}"
      ;;
 
   *) # First time that the CGI script was called. Show initial HTML page.

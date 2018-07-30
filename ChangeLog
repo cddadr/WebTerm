@@ -148,7 +148,7 @@
 
 	* Use JavaScript redirection for attaching the missing slash to
 	the URL. This should make it easier to use reverse proxies. It was
-	already possible to run shellinaboxd behind a proxy, but a lot of
+	already possible to run webtermd behind a proxy, but a lot of
 	users got the configuration wrong.
 
 2009-07-08  Markus Gutschke  <markus@shellinabox.com>
@@ -354,7 +354,7 @@
 	Previously, the feature test for TLSEXT did not always work correctly,
 	resulting in compilation failures.
 
-	* Improved support for embedding shellinaboxd into existing web
+	* Improved support for embedding webtermd into existing web
 	services. SSL certificates can now be passed in through a file
 	handle, and port and pid numbers can be retrieved from the CGI header.
 
@@ -371,9 +371,9 @@
 
 2009-01-01  Markus Gutschke  <markus@shellinabox.com>
 
-	* Added CGI mode for demand-loading the shellinaboxd daemon
+	* Added CGI mode for demand-loading the webtermd daemon
 	from a web server. This also allows for the web server to
-	perform authentication, instead of having shellinaboxd do so.
+	perform authentication, instead of having webtermd do so.
 	
 	* Tightened setuid-root operation to no longer allow switching
 	to arbitrary users/groups. As before, setuid-root remains a

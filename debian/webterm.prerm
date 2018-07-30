@@ -1,5 +1,5 @@
 #!/bin/sh
-# prerm script for shellinabox
+# prerm script for webterm
 #
 # see: dh_installdeb(1)
 
@@ -19,8 +19,8 @@ set -e
 
 case "$1" in
     remove)
-	[ ! -f /var/lib/shellinabox/certificate.pem ] \
-	 || rm /var/lib/shellinabox/certificate.pem
+	[ ! -f /var/lib/webterm/certificate.pem ] \
+	 || rm /var/lib/webterm/certificate.pem
 	;;
     upgrade|deconfigure)
         ;;

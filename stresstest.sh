@@ -7,7 +7,7 @@ rm -f "${PIDFILE}"
 trap '[ -r "${PIDFILE}" ] && kill "$(cat "${PIDFILE}")"; rm -f "${PIDFILE}"'  \
      EXIT INT TERM QUIT HUP
 
-./shellinaboxd -p "${PORT}" -s "/:$(id -u):$(id -g):${PWD}:/bin/bash -c       \
+./webtermd -p "${PORT}" -s "/:$(id -u):$(id -g):${PWD}:/bin/bash -c       \
                'while read i; do [ -z "${i}" ] && break; echo \" $i\"; done'" \
                --background="${PIDFILE}"
 

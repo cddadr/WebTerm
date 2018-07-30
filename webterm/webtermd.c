@@ -1,4 +1,4 @@
-// shellinaboxd.c -- A custom web server that makes command line applications
+// webtermd.c -- A custom web server that makes command line applications
 //                   available as AJAX web applications.
 // Copyright (C) 2008-2010 Markus Gutschke <markus@shellinabox.com>
 //
@@ -69,12 +69,12 @@
 
 #include "libhttp/http.h"
 #include "logging/logging.h"
-#include "shellinabox/externalfile.h"
-#include "shellinabox/launcher.h"
-#include "shellinabox/privileges.h"
-#include "shellinabox/service.h"
-#include "shellinabox/session.h"
-#include "shellinabox/usercss.h"
+#include "webterm/externalfile.h"
+#include "webterm/launcher.h"
+#include "webterm/privileges.h"
+#include "webterm/service.h"
+#include "webterm/session.h"
+#include "webterm/usercss.h"
 
 #ifdef HAVE_UNUSED
 #defined ATTR_UNUSED __attribute__((unused))
@@ -85,17 +85,17 @@
 #endif
 
 // Embedded resources
-#include "shellinabox/beep.h"
-#include "shellinabox/cgi_root.h"
-#include "shellinabox/enabled.h"
-#include "shellinabox/favicon.h"
-#include "shellinabox/keyboard.h"
-#include "shellinabox/keyboard-layout.h"
-#include "shellinabox/print-styles.h"
-#include "shellinabox/root_page.h"
-#include "shellinabox/shell_in_a_box.h"
-#include "shellinabox/styles.h"
-#include "shellinabox/vt100.h"
+#include "webterm/beep.h"
+#include "webterm/cgi_root.h"
+#include "webterm/enabled.h"
+#include "webterm/favicon.h"
+#include "webterm/keyboard.h"
+#include "webterm/keyboard-layout.h"
+#include "webterm/print-styles.h"
+#include "webterm/root_page.h"
+#include "webterm/shell_in_a_box.h"
+#include "webterm/styles.h"
+#include "webterm/vt100.h"
 
 #define PORTNUM           4200
 #define MAX_RESPONSE      2048
@@ -746,7 +746,7 @@ static void usage(void) {
   const char *user  = getUserName(r_uid);
   const char *group = getGroupName(r_gid);
 
-  message("Usage: shellinaboxd [OPTIONS]...\n"
+  message("Usage: webtermd [OPTIONS]...\n"
           "Starts an HTTP server that serves terminal emulators to AJAX "
           "enabled browsers.\n"
           "\n"

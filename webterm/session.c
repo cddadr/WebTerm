@@ -51,7 +51,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-#include "shellinabox/session.h"
+#include "webterm/session.h"
 #include "logging/logging.h"
 
 #ifdef HAVE_UNUSED

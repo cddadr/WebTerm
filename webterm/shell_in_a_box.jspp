@@ -63,11 +63,11 @@
 // If in doubt, consult a legal professional familiar with the laws that
 // apply in your country.
 
-// #define XHR_UNITIALIZED 0
-// #define XHR_OPEN        1
-// #define XHR_SENT        2
-// #define XHR_RECEIVING   3
-// #define XHR_LOADED      4
+#define XHR_UNITIALIZED 0
+#define XHR_OPEN        1
+#define XHR_SENT        2
+#define XHR_RECEIVING   3
+#define XHR_LOADED      4
 
 // IE does not define XMLHttpRequest by default, so we provide a suitable
 // wrapper.
@@ -140,7 +140,7 @@ ShellInABox.prototype.reconnect = function() {
   this.showReconnect(false);
   if (!this.session) {
     if (document.location.hash != '') {
-      // A shellinaboxd daemon launched from a CGI only allows a single
+      // A webtermd daemon launched from a CGI only allows a single
       // session. In order to reconnect, we must reload the frame definition
       // and obtain a new port number. As this is a different origin, we
       // need to get enclosing page to help us.
@@ -187,7 +187,7 @@ ShellInABox.prototype.sendRequest = function(request) {
 };
 
 ShellInABox.prototype.onReadyStateChange = function(request) {
-  if (request.readyState == 4 /* XHR_LOADED */) {
+  if (request.readyState == XHR_LOADED) {
     if (request.status == 200) {
       this.connected = true;
       var response   = eval('(' + request.responseText + ')');
@@ -244,7 +244,7 @@ ShellInABox.prototype.sendKeys = function(keys) {
 };
 
 ShellInABox.prototype.keyPressReadyStateChange = function(request) {
-  if (request.readyState == 4 /* XHR_LOADED */) {
+  if (request.readyState == XHR_LOADED) {
     this.keysInFlight = false;
     if (this.pendingKeys) {
       this.sendKeys('');
@@ -267,16 +267,16 @@ ShellInABox.prototype.keysPressed = function(ch) {
     } else if (c < 0x10000) {
       s += 'E'                                 +
            hex.charAt(       (c >> 12)       ) +
-           hex.charAt(0x8 + ((c >> 10) & 0x3)) +
+           hex.charAt(0x8 +  (c >> 10) & 0x3 ) +
            hex.charAt(       (c >>  6) & 0xF ) +
            hex.charAt(0x8 + ((c >>  4) & 0x3)) +
            hex.charAt(        c        & 0xF );
     } else if (c < 0x110000) {
       s += 'F'                                 +
            hex.charAt(       (c >> 18)       ) +
-           hex.charAt(0x8 + ((c >> 16) & 0x3)) +
+           hex.charAt(0x8 +  (c >> 16) & 0x3 ) +
            hex.charAt(       (c >> 12) & 0xF ) +
-           hex.charAt(0x8 + ((c >> 10) & 0x3)) +
+           hex.charAt(0x8 +  (c >> 10) & 0x3 ) +
            hex.charAt(       (c >>  6) & 0xF ) +
            hex.charAt(0x8 + ((c >>  4) & 0x3)) +
            hex.charAt(        c        & 0xF );
@@ -358,7 +358,7 @@ ShellInABox.prototype.extendContextMenu = function(entries, actions) {
 };
 
 ShellInABox.prototype.about = function() {
-  alert("Shell In A Box version " + "2.10 (revision 239)" +
+  alert("Shell In A Box version " + VERSION +
         "\nCopyright 2008-2010 by Markus Gutschke\n" +
         "For more information check http://shellinabox.com" +
         (typeof serverSupportsSSL != 'undefined' && serverSupportsSSL ?

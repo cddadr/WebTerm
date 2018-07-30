@@ -33,32 +33,32 @@ override_dh_install:
 # debian/tmp the things that need to be included in the package.
 	$(MAKE) install DESTDIR=$(DESTDIR)
 # Set up system-wide user CSS style options
-	mkdir -p "$(DESTDIR)/etc/shellinabox/options-available"
-	mkdir -p "$(DESTDIR)/etc/shellinabox/options-enabled"
+	mkdir -p "$(DESTDIR)/etc/webterm/options-available"
+	mkdir -p "$(DESTDIR)/etc/webterm/options-enabled"
 	for i in \
 		"00+Black on White" \
 		"00_White On Black" \
 		"01_Monochrome" \
 		"01+Color Terminal"; do \
-	  cp "$(DESTDIR)/usr/share/doc/shellinabox/$$(echo "$$i"|	\
+	  cp "$(DESTDIR)/usr/share/doc/webterm/$$(echo "$$i"|	\
 		sed -e 's/[0-9]*[_+]\([^ ]*\).*/\1/'| 			\
 		tr A-Z a-z)"*.css                     			\
-	     "$(DESTDIR)/etc/shellinabox/options-available/$$i.css";	\
+	     "$(DESTDIR)/etc/webterm/options-available/$$i.css";	\
 	done
-	cd "$(DESTDIR)/etc/shellinabox/options-enabled" \
+	cd "$(DESTDIR)/etc/webterm/options-enabled" \
 	  && ln -s ../options-available/*.css .
 	cp "$(CURDIR)/debian/README.available"                                \
-	   "$(DESTDIR)/etc/shellinabox/options-available/README"
+	   "$(DESTDIR)/etc/webterm/options-available/README"
 	cp "$(CURDIR)/debian/README.enabled"                                  \
-	   "$(DESTDIR)/etc/shellinabox/options-enabled/README"
+	   "$(DESTDIR)/etc/webterm/options-enabled/README"
 # Shellinabox home directory
-#	mkdir -p "$(DESTDIR)/var/lib/shellinabox"
+#	mkdir -p "$(DESTDIR)/var/lib/webterm"
 # Add Lintian override. ShellInABox has an explicit exemption allowing
 # the linking its GPLv2 code with OpenSSL.
 	mkdir -p "$(DESTDIR)/usr/share/lintian/overrides/"
 	{ echo '# ShellInABox has an explicit exemption allowing the linking';\
 	echo '# of its GPLv2 code with OpenSSL';                              \
-	echo 'shellinabox binary: possible-gpl-code-linked-with-openssl'; }   \
-	   >"$(DESTDIR)/usr/share/lintian/overrides/shellinabox"
+	echo 'webterm binary: possible-gpl-code-linked-with-openssl'; }   \
+	   >"$(DESTDIR)/usr/share/lintian/overrides/webterm"
 # Now perform the normal debhelper install.
 	dh_install

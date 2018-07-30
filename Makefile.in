@@ -37,7 +37,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-bin_PROGRAMS = shellinaboxd$(EXEEXT)
+bin_PROGRAMS = webtermd$(EXEEXT)
 subdir = .
 DIST_COMMON = README $(am__configure_deps) $(dist_doc_DATA) \
 	$(noinst_HEADERS) $(srcdir)/Makefile.am $(srcdir)/Makefile.in \
@@ -72,14 +72,14 @@ liblogging_la_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
 am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(man1dir)" \
 	"$(DESTDIR)$(docdir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_shellinaboxd_OBJECTS = shellinaboxd.$(OBJEXT) \
+am_webtermd_OBJECTS = webtermd.$(OBJEXT) \
 	externalfile.$(OBJEXT) launcher.$(OBJEXT) privileges.$(OBJEXT) \
 	service.$(OBJEXT) session.$(OBJEXT) usercss.$(OBJEXT)
-shellinaboxd_OBJECTS = $(am_shellinaboxd_OBJECTS)
-shellinaboxd_DEPENDENCIES = liblogging.la libhttp.la
-shellinaboxd_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
+webtermd_OBJECTS = $(am_webtermd_OBJECTS)
+webtermd_DEPENDENCIES = liblogging.la libhttp.la
+webtermd_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
-	$(shellinaboxd_LDFLAGS) $(LDFLAGS) -o $@
+	$(webtermd_LDFLAGS) $(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -94,9 +94,9 @@ LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
 SOURCES = $(libhttp_la_SOURCES) $(liblogging_la_SOURCES) \
-	$(shellinaboxd_SOURCES)
+	$(webtermd_SOURCES)
 DIST_SOURCES = $(libhttp_la_SOURCES) $(liblogging_la_SOURCES) \
-	$(shellinaboxd_SOURCES)
+	$(webtermd_SOURCES)
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
 am__vpath_adj = case $$p in \
     $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
@@ -256,7 +256,7 @@ noinst_LTLIBRARIES = libhttp.la                                             \
                        liblogging.la
 
 noinst_DATA = $(top_srcdir)/demo/demo.js
-man_MANS = shellinaboxd.1
+man_MANS = webtermd.1
 noinst_HEADERS = libhttp/http.h
 dist_doc_DATA = AUTHORS                                                \
                        COPYING                                                \
@@ -266,10 +266,10 @@ dist_doc_DATA = AUTHORS                                                \
                        NEWS                                                   \
                        README                                                 \
                        TODO                                                   \
-                       shellinabox/white-on-black.css                         \
-                       shellinabox/black-on-white.css                         \
-                       shellinabox/monochrome.css                             \
-                       shellinabox/color.css
+                       webterm/white-on-black.css                         \
+                       webterm/black-on-white.css                         \
+                       webterm/monochrome.css                             \
+                       webterm/color.css
 
 EXTRA_DIST = INSTALL.Debian                                         \
                        README.Fedora                                          \
@@ -289,11 +289,11 @@ EXTRA_DIST = INSTALL.Debian                                         \
                        demo/usercss-1.css                                     \
                        demo/usercss-2.css                                     \
                        demo/usercss-3.css                                     \
-                       etc-pam.d-shellinabox-example                          \
-                       shellinabox/shellinaboxd.man.in                        \
-                       shellinabox/shell_in_a_box.js                          \
-                       shellinabox/vt100.js                                   \
-                       shellinabox/cgi-mode-example.sh                        \
+                       etc-pam.d-webterm-example                          \
+                       webterm/webtermd.man.in                        \
+                       webterm/shell_in_a_box.js                          \
+                       webterm/vt100.js                                   \
+                       webterm/cgi-mode-example.sh                        \
                        debian/README                                          \
                        debian/README.available                                \
                        debian/README.enabled                                  \
@@ -303,12 +303,12 @@ EXTRA_DIST = INSTALL.Debian                                         \
                        debian/copyright                                       \
                        debian/docs                                            \
                        debian/rules                                           \
-                       debian/shellinabox.default                             \
-                       debian/shellinabox.dirs                                \
-                       debian/shellinabox.init                                \
-                       debian/shellinabox.install                             \
-                       debian/shellinabox.postinst                            \
-                       debian/shellinabox.postrm                              \
+                       debian/webterm.default                             \
+                       debian/webterm.dirs                                \
+                       debian/webterm.init                                \
+                       debian/webterm.install                             \
+                       debian/webterm.postinst                            \
+                       debian/webterm.postrm                              \
                        debian/source/format                                   \
                        debian/watch
 
@@ -339,50 +339,50 @@ libhttp_la_SOURCES = libhttp/hashmap.c                                      \
 libhttp_la_LDFLAGS = -export-symbols  $(top_srcdir)/libhttp/libhttp.sym     \
                        -version 1:0:0
 
-shellinaboxd_SOURCES = shellinabox/shellinaboxd.c                             \
-                       shellinabox/externalfile.c                             \
-                       shellinabox/externalfile.h                             \
-                       shellinabox/launcher.c                                 \
-                       shellinabox/launcher.h                                 \
-                       shellinabox/privileges.c                               \
-                       shellinabox/privileges.h                               \
-                       shellinabox/service.c                                  \
-                       shellinabox/service.h                                  \
-                       shellinabox/session.c                                  \
-                       shellinabox/session.h                                  \
-                       shellinabox/usercss.c                                  \
-                       shellinabox/usercss.h                                  \
-                       shellinabox/cgi_root.html                              \
-                       shellinabox/root_page.html                             \
-                       shellinabox/vt100.jspp                                 \
-                       shellinabox/shell_in_a_box.jspp                        \
-                       shellinabox/styles.css                                 \
-                       shellinabox/print-styles.css                           \
-                       shellinabox/enabled.gif                                \
-                       shellinabox/favicon.ico                                \
-                       shellinabox/keyboard.png                               \
-                       shellinabox/keyboard-layout.html                       \
-                       shellinabox/beep.wav                                   \
+webtermd_SOURCES = webterm/webtermd.c                             \
+                       webterm/externalfile.c                             \
+                       webterm/externalfile.h                             \
+                       webterm/launcher.c                                 \
+                       webterm/launcher.h                                 \
+                       webterm/privileges.c                               \
+                       webterm/privileges.h                               \
+                       webterm/service.c                                  \
+                       webterm/service.h                                  \
+                       webterm/session.c                                  \
+                       webterm/session.h                                  \
+                       webterm/usercss.c                                  \
+                       webterm/usercss.h                                  \
+                       webterm/cgi_root.html                              \
+                       webterm/root_page.html                             \
+                       webterm/vt100.jspp                                 \
+                       webterm/shell_in_a_box.jspp                        \
+                       webterm/styles.css                                 \
+                       webterm/print-styles.css                           \
+                       webterm/enabled.gif                                \
+                       webterm/favicon.ico                                \
+                       webterm/keyboard.png                               \
+                       webterm/keyboard-layout.html                       \
+                       webterm/beep.wav                                   \
                        config.h
 
-BUILT_SOURCES = shellinabox/beep.h                                     \
-                       shellinabox/cgi_root.h                                 \
-                       shellinabox/enabled.h                                  \
-                       shellinabox/favicon.h                                  \
-                       shellinabox/keyboard.h                                 \
-                       shellinabox/keyboard-layout.h                          \
-                       shellinabox/print-styles.h                             \
-                       shellinabox/root_page.h                                \
-                       shellinabox/shell_in_a_box.h                           \
-                       shellinabox/shell_in_a_box.js                          \
-                       shellinabox/styles.h                                   \
-                       shellinabox/vt100.h                                    \
-                       shellinabox/vt100.js
+BUILT_SOURCES = webterm/beep.h                                     \
+                       webterm/cgi_root.h                                 \
+                       webterm/enabled.h                                  \
+                       webterm/favicon.h                                  \
+                       webterm/keyboard.h                                 \
+                       webterm/keyboard-layout.h                          \
+                       webterm/print-styles.h                             \
+                       webterm/root_page.h                                \
+                       webterm/shell_in_a_box.h                           \
+                       webterm/shell_in_a_box.js                          \
+                       webterm/styles.h                                   \
+                       webterm/vt100.h                                    \
+                       webterm/vt100.js
 
-shellinaboxd_LDADD = liblogging.la                                          \
+webtermd_LDADD = liblogging.la                                          \
                        libhttp.la
 
-shellinaboxd_LDFLAGS = -static
+webtermd_LDFLAGS = -static
 symbolname = \
   sed -e 's/.*\/\([^.]*\)[.].*/\1/'                                           \
       -e 't0'                                                                 \
@@ -507,9 +507,9 @@ clean-binPROGRAMS:
 	list=`for p in $$list; do echo "$$p"; done | sed 's/$(EXEEXT)$$//'`; \
 	echo " rm -f" $$list; \
 	rm -f $$list
-shellinaboxd$(EXEEXT): $(shellinaboxd_OBJECTS) $(shellinaboxd_DEPENDENCIES) 
-	@rm -f shellinaboxd$(EXEEXT)
-	$(shellinaboxd_LINK) $(shellinaboxd_OBJECTS) $(shellinaboxd_LDADD) $(LIBS)
+webtermd$(EXEEXT): $(webtermd_OBJECTS) $(webtermd_DEPENDENCIES) 
+	@rm -f webtermd$(EXEEXT)
+	$(webtermd_LINK) $(webtermd_OBJECTS) $(webtermd_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -526,7 +526,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/server.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/service.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/session.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/shellinaboxd.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/webtermd.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ssl.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/trie.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/url.Plo@am__quote@
@@ -602,103 +602,103 @@ logging.lo: logging/logging.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o logging.lo `test -f 'logging/logging.c' || echo '$(srcdir)/'`logging/logging.c
 
-shellinaboxd.o: shellinabox/shellinaboxd.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT shellinaboxd.o -MD -MP -MF $(DEPDIR)/shellinaboxd.Tpo -c -o shellinaboxd.o `test -f 'shellinabox/shellinaboxd.c' || echo '$(srcdir)/'`shellinabox/shellinaboxd.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/shellinaboxd.Tpo $(DEPDIR)/shellinaboxd.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='shellinabox/shellinaboxd.c' object='shellinaboxd.o' libtool=no @AMDEPBACKSLASH@
+webtermd.o: webterm/webtermd.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT webtermd.o -MD -MP -MF $(DEPDIR)/webtermd.Tpo -c -o webtermd.o `test -f 'webterm/webtermd.c' || echo '$(srcdir)/'`webterm/webtermd.c
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/webtermd.Tpo $(DEPDIR)/webtermd.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='webterm/webtermd.c' object='webtermd.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o shellinaboxd.o `test -f 'shellinabox/shellinaboxd.c' || echo '$(srcdir)/'`shellinabox/shellinaboxd.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o webtermd.o `test -f 'webterm/webtermd.c' || echo '$(srcdir)/'`webterm/webtermd.c
 
-shellinaboxd.obj: shellinabox/shellinaboxd.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT shellinaboxd.obj -MD -MP -MF $(DEPDIR)/shellinaboxd.Tpo -c -o shellinaboxd.obj `if test -f 'shellinabox/shellinaboxd.c'; then $(CYGPATH_W) 'shellinabox/shellinaboxd.c'; else $(CYGPATH_W) '$(srcdir)/shellinabox/shellinaboxd.c'; fi`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/shellinaboxd.Tpo $(DEPDIR)/shellinaboxd.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='shellinabox/shellinaboxd.c' object='shellinaboxd.obj' libtool=no @AMDEPBACKSLASH@
+webtermd.obj: webterm/webtermd.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT webtermd.obj -MD -MP -MF $(DEPDIR)/webtermd.Tpo -c -o webtermd.obj `if test -f 'webterm/webtermd.c'; then $(CYGPATH_W) 'webterm/webtermd.c'; else $(CYGPATH_W) '$(srcdir)/webterm/webtermd.c'; fi`
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/webtermd.Tpo $(DEPDIR)/webtermd.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='webterm/webtermd.c' object='webtermd.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o shellinaboxd.obj `if test -f 'shellinabox/shellinaboxd.c'; then $(CYGPATH_W) 'shellinabox/shellinaboxd.c'; else $(CYGPATH_W) '$(srcdir)/shellinabox/shellinaboxd.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o webtermd.obj `if test -f 'webterm/webtermd.c'; then $(CYGPATH_W) 'webterm/webtermd.c'; else $(CYGPATH_W) '$(srcdir)/webterm/webtermd.c'; fi`
 
-externalfile.o: shellinabox/externalfile.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT externalfile.o -MD -MP -MF $(DEPDIR)/externalfile.Tpo -c -o externalfile.o `test -f 'shellinabox/externalfile.c' || echo '$(srcdir)/'`shellinabox/externalfile.c
+externalfile.o: webterm/externalfile.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT externalfile.o -MD -MP -MF $(DEPDIR)/externalfile.Tpo -c -o externalfile.o `test -f 'webterm/externalfile.c' || echo '$(srcdir)/'`webterm/externalfile.c
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/externalfile.Tpo $(DEPDIR)/externalfile.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='shellinabox/externalfile.c' object='externalfile.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='webterm/externalfile.c' object='externalfile.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o externalfile.o `test -f 'shellinabox/externalfile.c' || echo '$(srcdir)/'`shellinabox/externalfile.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o externalfile.o `test -f 'webterm/externalfile.c' || echo '$(srcdir)/'`webterm/externalfile.c
 
-externalfile.obj: shellinabox/externalfile.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT externalfile.obj -MD -MP -MF $(DEPDIR)/externalfile.Tpo -c -o externalfile.obj `if test -f 'shellinabox/externalfile.c'; then $(CYGPATH_W) 'shellinabox/externalfile.c'; else $(CYGPATH_W) '$(srcdir)/shellinabox/externalfile.c'; fi`
+externalfile.obj: webterm/externalfile.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT externalfile.obj -MD -MP -MF $(DEPDIR)/externalfile.Tpo -c -o externalfile.obj `if test -f 'webterm/externalfile.c'; then $(CYGPATH_W) 'webterm/externalfile.c'; else $(CYGPATH_W) '$(srcdir)/webterm/externalfile.c'; fi`
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/externalfile.Tpo $(DEPDIR)/externalfile.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='shellinabox/externalfile.c' object='externalfile.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='webterm/externalfile.c' object='externalfile.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o externalfile.obj `if test -f 'shellinabox/externalfile.c'; then $(CYGPATH_W) 'shellinabox/externalfile.c'; else $(CYGPATH_W) '$(srcdir)/shellinabox/externalfile.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o externalfile.obj `if test -f 'webterm/externalfile.c'; then $(CYGPATH_W) 'webterm/externalfile.c'; else $(CYGPATH_W) '$(srcdir)/webterm/externalfile.c'; fi`
 
-launcher.o: shellinabox/launcher.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT launcher.o -MD -MP -MF $(DEPDIR)/launcher.Tpo -c -o launcher.o `test -f 'shellinabox/launcher.c' || echo '$(srcdir)/'`shellinabox/launcher.c
+launcher.o: webterm/launcher.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT launcher.o -MD -MP -MF $(DEPDIR)/launcher.Tpo -c -o launcher.o `test -f 'webterm/launcher.c' || echo '$(srcdir)/'`webterm/launcher.c
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/launcher.Tpo $(DEPDIR)/launcher.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='shellinabox/launcher.c' object='launcher.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='webterm/launcher.c' object='launcher.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o launcher.o `test -f 'shellinabox/launcher.c' || echo '$(srcdir)/'`shellinabox/launcher.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o launcher.o `test -f 'webterm/launcher.c' || echo '$(srcdir)/'`webterm/launcher.c
 
-launcher.obj: shellinabox/launcher.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT launcher.obj -MD -MP -MF $(DEPDIR)/launcher.Tpo -c -o launcher.obj `if test -f 'shellinabox/launcher.c'; then $(CYGPATH_W) 'shellinabox/launcher.c'; else $(CYGPATH_W) '$(srcdir)/shellinabox/launcher.c'; fi`
+launcher.obj: webterm/launcher.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT launcher.obj -MD -MP -MF $(DEPDIR)/launcher.Tpo -c -o launcher.obj `if test -f 'webterm/launcher.c'; then $(CYGPATH_W) 'webterm/launcher.c'; else $(CYGPATH_W) '$(srcdir)/webterm/launcher.c'; fi`
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/launcher.Tpo $(DEPDIR)/launcher.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='shellinabox/launcher.c' object='launcher.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='webterm/launcher.c' object='launcher.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o launcher.obj `if test -f 'shellinabox/launcher.c'; then $(CYGPATH_W) 'shellinabox/launcher.c'; else $(CYGPATH_W) '$(srcdir)/shellinabox/launcher.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o launcher.obj `if test -f 'webterm/launcher.c'; then $(CYGPATH_W) 'webterm/launcher.c'; else $(CYGPATH_W) '$(srcdir)/webterm/launcher.c'; fi`
 
-privileges.o: shellinabox/privileges.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT privileges.o -MD -MP -MF $(DEPDIR)/privileges.Tpo -c -o privileges.o `test -f 'shellinabox/privileges.c' || echo '$(srcdir)/'`shellinabox/privileges.c
+privileges.o: webterm/privileges.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT privileges.o -MD -MP -MF $(DEPDIR)/privileges.Tpo -c -o privileges.o `test -f 'webterm/privileges.c' || echo '$(srcdir)/'`webterm/privileges.c
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/privileges.Tpo $(DEPDIR)/privileges.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='shellinabox/privileges.c' object='privileges.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='webterm/privileges.c' object='privileges.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o privileges.o `test -f 'shellinabox/privileges.c' || echo '$(srcdir)/'`shellinabox/privileges.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o privileges.o `test -f 'webterm/privileges.c' || echo '$(srcdir)/'`webterm/privileges.c
 
-privileges.obj: shellinabox/privileges.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT privileges.obj -MD -MP -MF $(DEPDIR)/privileges.Tpo -c -o privileges.obj `if test -f 'shellinabox/privileges.c'; then $(CYGPATH_W) 'shellinabox/privileges.c'; else $(CYGPATH_W) '$(srcdir)/shellinabox/privileges.c'; fi`
+privileges.obj: webterm/privileges.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT privileges.obj -MD -MP -MF $(DEPDIR)/privileges.Tpo -c -o privileges.obj `if test -f 'webterm/privileges.c'; then $(CYGPATH_W) 'webterm/privileges.c'; else $(CYGPATH_W) '$(srcdir)/webterm/privileges.c'; fi`
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/privileges.Tpo $(DEPDIR)/privileges.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='shellinabox/privileges.c' object='privileges.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='webterm/privileges.c' object='privileges.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o privileges.obj `if test -f 'shellinabox/privileges.c'; then $(CYGPATH_W) 'shellinabox/privileges.c'; else $(CYGPATH_W) '$(srcdir)/shellinabox/privileges.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o privileges.obj `if test -f 'webterm/privileges.c'; then $(CYGPATH_W) 'webterm/privileges.c'; else $(CYGPATH_W) '$(srcdir)/webterm/privileges.c'; fi`
 
-service.o: shellinabox/service.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT service.o -MD -MP -MF $(DEPDIR)/service.Tpo -c -o service.o `test -f 'shellinabox/service.c' || echo '$(srcdir)/'`shellinabox/service.c
+service.o: webterm/service.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT service.o -MD -MP -MF $(DEPDIR)/service.Tpo -c -o service.o `test -f 'webterm/service.c' || echo '$(srcdir)/'`webterm/service.c
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/service.Tpo $(DEPDIR)/service.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='shellinabox/service.c' object='service.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='webterm/service.c' object='service.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o service.o `test -f 'shellinabox/service.c' || echo '$(srcdir)/'`shellinabox/service.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o service.o `test -f 'webterm/service.c' || echo '$(srcdir)/'`webterm/service.c
 
-service.obj: shellinabox/service.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT service.obj -MD -MP -MF $(DEPDIR)/service.Tpo -c -o service.obj `if test -f 'shellinabox/service.c'; then $(CYGPATH_W) 'shellinabox/service.c'; else $(CYGPATH_W) '$(srcdir)/shellinabox/service.c'; fi`
+service.obj: webterm/service.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT service.obj -MD -MP -MF $(DEPDIR)/service.Tpo -c -o service.obj `if test -f 'webterm/service.c'; then $(CYGPATH_W) 'webterm/service.c'; else $(CYGPATH_W) '$(srcdir)/webterm/service.c'; fi`
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/service.Tpo $(DEPDIR)/service.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='shellinabox/service.c' object='service.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='webterm/service.c' object='service.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o service.obj `if test -f 'shellinabox/service.c'; then $(CYGPATH_W) 'shellinabox/service.c'; else $(CYGPATH_W) '$(srcdir)/shellinabox/service.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o service.obj `if test -f 'webterm/service.c'; then $(CYGPATH_W) 'webterm/service.c'; else $(CYGPATH_W) '$(srcdir)/webterm/service.c'; fi`
 
-session.o: shellinabox/session.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT session.o -MD -MP -MF $(DEPDIR)/session.Tpo -c -o session.o `test -f 'shellinabox/session.c' || echo '$(srcdir)/'`shellinabox/session.c
+session.o: webterm/session.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT session.o -MD -MP -MF $(DEPDIR)/session.Tpo -c -o session.o `test -f 'webterm/session.c' || echo '$(srcdir)/'`webterm/session.c
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/session.Tpo $(DEPDIR)/session.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='shellinabox/session.c' object='session.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='webterm/session.c' object='session.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o session.o `test -f 'shellinabox/session.c' || echo '$(srcdir)/'`shellinabox/session.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o session.o `test -f 'webterm/session.c' || echo '$(srcdir)/'`webterm/session.c
 
-session.obj: shellinabox/session.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT session.obj -MD -MP -MF $(DEPDIR)/session.Tpo -c -o session.obj `if test -f 'shellinabox/session.c'; then $(CYGPATH_W) 'shellinabox/session.c'; else $(CYGPATH_W) '$(srcdir)/shellinabox/session.c'; fi`
+session.obj: webterm/session.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT session.obj -MD -MP -MF $(DEPDIR)/session.Tpo -c -o session.obj `if test -f 'webterm/session.c'; then $(CYGPATH_W) 'webterm/session.c'; else $(CYGPATH_W) '$(srcdir)/webterm/session.c'; fi`
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/session.Tpo $(DEPDIR)/session.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='shellinabox/session.c' object='session.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='webterm/session.c' object='session.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o session.obj `if test -f 'shellinabox/session.c'; then $(CYGPATH_W) 'shellinabox/session.c'; else $(CYGPATH_W) '$(srcdir)/shellinabox/session.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o session.obj `if test -f 'webterm/session.c'; then $(CYGPATH_W) 'webterm/session.c'; else $(CYGPATH_W) '$(srcdir)/webterm/session.c'; fi`
 
-usercss.o: shellinabox/usercss.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT usercss.o -MD -MP -MF $(DEPDIR)/usercss.Tpo -c -o usercss.o `test -f 'shellinabox/usercss.c' || echo '$(srcdir)/'`shellinabox/usercss.c
+usercss.o: webterm/usercss.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT usercss.o -MD -MP -MF $(DEPDIR)/usercss.Tpo -c -o usercss.o `test -f 'webterm/usercss.c' || echo '$(srcdir)/'`webterm/usercss.c
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/usercss.Tpo $(DEPDIR)/usercss.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='shellinabox/usercss.c' object='usercss.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='webterm/usercss.c' object='usercss.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o usercss.o `test -f 'shellinabox/usercss.c' || echo '$(srcdir)/'`shellinabox/usercss.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o usercss.o `test -f 'webterm/usercss.c' || echo '$(srcdir)/'`webterm/usercss.c
 
-usercss.obj: shellinabox/usercss.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT usercss.obj -MD -MP -MF $(DEPDIR)/usercss.Tpo -c -o usercss.obj `if test -f 'shellinabox/usercss.c'; then $(CYGPATH_W) 'shellinabox/usercss.c'; else $(CYGPATH_W) '$(srcdir)/shellinabox/usercss.c'; fi`
+usercss.obj: webterm/usercss.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT usercss.obj -MD -MP -MF $(DEPDIR)/usercss.Tpo -c -o usercss.obj `if test -f 'webterm/usercss.c'; then $(CYGPATH_W) 'webterm/usercss.c'; else $(CYGPATH_W) '$(srcdir)/webterm/usercss.c'; fi`
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/usercss.Tpo $(DEPDIR)/usercss.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='shellinabox/usercss.c' object='usercss.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='webterm/usercss.c' object='usercss.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o usercss.obj `if test -f 'shellinabox/usercss.c'; then $(CYGPATH_W) 'shellinabox/usercss.c'; else $(CYGPATH_W) '$(srcdir)/shellinabox/usercss.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o usercss.obj `if test -f 'webterm/usercss.c'; then $(CYGPATH_W) 'webterm/usercss.c'; else $(CYGPATH_W) '$(srcdir)/webterm/usercss.c'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -1133,57 +1133,57 @@ ${top_srcdir}/demo/demo.js: ${top_srcdir}/demo/beep.wav                       \
                             ${top_srcdir}/demo/usercss-2.css                  \
                             ${top_srcdir}/demo/usercss-3.css
 
-${top_srcdir}/demo/beep.wav: ${top_srcdir}/shellinabox/beep.wav
+${top_srcdir}/demo/beep.wav: ${top_srcdir}/webterm/beep.wav
 	@rm -f "$@"
 	ln "$?" "$@"
 
-${top_srcdir}/demo/enabled.gif: ${top_srcdir}/shellinabox/enabled.gif
+${top_srcdir}/demo/enabled.gif: ${top_srcdir}/webterm/enabled.gif
 	@rm -f "$@"
 	ln "$?" "$@"
 
-${top_srcdir}/demo/favicon.ico: ${top_srcdir}/shellinabox/favicon.ico
+${top_srcdir}/demo/favicon.ico: ${top_srcdir}/webterm/favicon.ico
 	@rm -f "$@"
 	ln "$?" "$@"
 
-${top_srcdir}/demo/keyboard.html: ${top_srcdir}/shellinabox/keyboard-layout.html
+${top_srcdir}/demo/keyboard.html: ${top_srcdir}/webterm/keyboard-layout.html
 	@rm -f "$@"
 	ln "$?" "$@"
 
-${top_srcdir}/demo/keyboard.png: ${top_srcdir}/shellinabox/keyboard.png
+${top_srcdir}/demo/keyboard.png: ${top_srcdir}/webterm/keyboard.png
 	@rm -f "$@"
 	ln "$?" "$@"
 
-${top_srcdir}/demo/styles.css: ${top_srcdir}/shellinabox/styles.css
+${top_srcdir}/demo/styles.css: ${top_srcdir}/webterm/styles.css
 	@rm -f "$@"
 	sed -e '/\[if DEFINES_COLORS\]/,/\[endif DEFINES_COLORS\]/d' "$?" >"$@"
 
-${top_srcdir}/demo/print-styles.css: ${top_srcdir}/shellinabox/print-styles.css
+${top_srcdir}/demo/print-styles.css: ${top_srcdir}/webterm/print-styles.css
 	@rm -f "$@"
 	ln "$?" "$@"
 
-${top_srcdir}/demo/usercss-0.css: ${top_srcdir}/shellinabox/white-on-black.css
+${top_srcdir}/demo/usercss-0.css: ${top_srcdir}/webterm/white-on-black.css
 	@rm -f "$@"
 	ln "$?" "$@"
 
-${top_srcdir}/demo/usercss-1.css: ${top_srcdir}/shellinabox/black-on-white.css
+${top_srcdir}/demo/usercss-1.css: ${top_srcdir}/webterm/black-on-white.css
 	@rm -f "$@"
 	ln "$?" "$@"
 
-${top_srcdir}/demo/usercss-2.css: ${top_srcdir}/shellinabox/monochrome.css
+${top_srcdir}/demo/usercss-2.css: ${top_srcdir}/webterm/monochrome.css
 	@rm -f "$@"
 	ln "$?" "$@"
 
-${top_srcdir}/demo/usercss-3.css: ${top_srcdir}/shellinabox/color.css
+${top_srcdir}/demo/usercss-3.css: ${top_srcdir}/webterm/color.css
 	@rm -f "$@"
 	ln "$?" "$@"
 
-${top_srcdir}/demo/vt100.js: ${top_srcdir}/shellinabox/vt100.js
+${top_srcdir}/demo/vt100.js: ${top_srcdir}/webterm/vt100.js
 	@rm -f "$@"
 	ln "$?" "$@"
 
-shellinaboxd.1: ${top_srcdir}/shellinabox/shellinaboxd.man.in                 \
+webtermd.1: ${top_srcdir}/webterm/webtermd.man.in                 \
 		${top_srcdir}/config.h
-	@src="${top_srcdir}/shellinabox/shellinaboxd.man.in";                 \
+	@src="${top_srcdir}/webterm/webtermd.man.in";                 \
 	echo preprocess  "$$src" '>'"$@";                                     \
 	if sed -e 's/^#define \([^ ]*\).*/\1/' -e t -e d config.h |           \
              grep 'HAVE_BIN_LOGIN' >/dev/null 2>&1; then                      \
@@ -1214,23 +1214,23 @@ shellinaboxd.1: ${top_srcdir}/shellinabox/shellinaboxd.man.in                 \
 	man -Tps "./$@" >"$${out}" 2>/dev/null || rm -f "$${out}"
 
 clean-local:
-	-rm -rf shellinaboxd.1                                                \
-	        shellinaboxd.ps
-	-rm -rf debian/shellinabox                                            \
-	        debian/shellinabox*.debhelper*                                \
-	        debian/shellinabox.substvars                                  \
+	-rm -rf webtermd.1                                                \
+	        webtermd.ps
+	-rm -rf debian/webterm                                            \
+	        debian/webterm*.debhelper*                                \
+	        debian/webterm.substvars                                  \
 	        debian/tmp
-	-rm -rf shellinabox/beep.h                                            \
-	        shellinabox/cgi_root.h      				      \
-	        shellinabox/enabled.h       				      \
-	        shellinabox/favicon.h       				      \
-	        shellinabox/keyboard.h      				      \
-	        shellinabox/keyboard-layout.h				      \
-	        shellinabox/print-styles.h  				      \
-	        shellinabox/root_page.h     				      \
-	        shellinabox/shell_in_a_box.h				      \
-	        shellinabox/styles.h                                          \
-	        shellinabox/vt100.h
+	-rm -rf webterm/beep.h                                            \
+	        webterm/cgi_root.h      				      \
+	        webterm/enabled.h       				      \
+	        webterm/favicon.h       				      \
+	        webterm/keyboard.h      				      \
+	        webterm/keyboard-layout.h				      \
+	        webterm/print-styles.h  				      \
+	        webterm/root_page.h     				      \
+	        webterm/shell_in_a_box.h				      \
+	        webterm/styles.h                                          \
+	        webterm/vt100.h
 
 .css.h:
 	@echo od "$<" '>'"$@"

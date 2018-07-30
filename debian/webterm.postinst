@@ -1,5 +1,5 @@
 #!/bin/sh
-# postinst script for shellinabox
+# postinst script for webterm
 #
 # see: dh_installdeb(1)
 
@@ -20,15 +20,15 @@ set -e
 
 case "$1" in
     configure)
-      if ! getent passwd shellinabox >/dev/null; then
+      if ! getent passwd webterm >/dev/null; then
         adduser --disabled-password  --quiet --system \
-          --home /var/lib/shellinabox --gecos "Shell In A Box" \
-          --group shellinabox
+          --home /var/lib/webterm --gecos "Shell In A Box" \
+          --group webterm
       fi
 	# Shellinabox must own the certificate directory so that it
 	# can write the certificate even when the daemon has given-up
 	# root privileges.
-#      chown shellinabox:shellinabox /var/lib/shellinabox
+#      chown webterm:webterm /var/lib/webterm
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)

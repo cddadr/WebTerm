@@ -53,9 +53,9 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#include "shellinabox/externalfile.h"
-#include "shellinabox/service.h"
-#include "shellinabox/session.h"
+#include "webterm/externalfile.h"
+#include "webterm/service.h"
+#include "webterm/session.h"
 #include "libhttp/server.h"
 #include "logging/logging.h"
 

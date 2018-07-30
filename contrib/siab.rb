@@ -6,14 +6,14 @@
 #        USAGE: ruby siab.rb [start|stop|restar|help]
 #
 #  DESCRIPTION: a ShellInAbox control script and configuration system reader.
-#               To auto-configure a shellinabox service create a conf directory
-#               in the shellinabox home dir.  The URL will be the name of the file(s)
+#               To auto-configure a webterm service create a conf directory
+#               in the webterm home dir.  The URL will be the name of the file(s)
 #               that reside in conf, and the command will be the contents of the file.
 #
 #               EX configuration file :  conf/nethack
 #               conf/nethack contents :  /usr/games/nethack
 #
-#               Change the value of @siab_home to where you install shellinabox
+#               Change the value of @siab_home to where you install webterm
 #      OPTIONS: none
 # REQUIREMENTS: ruby
 #         BUGS: ---
@@ -25,7 +25,7 @@
 #     REVISION: 1.0
 #===============================================================================
 
-@siab_home="/opt/shellinabox"
+@siab_home="/opt/webterm"
 @urls = Hash.new
 @urllist=""
 @top_dir=Dir.pwd
@@ -46,7 +46,7 @@ def start
   @urls.each_pair do |k,v|
     command_line = command_line + "-s " + "/#{k}:root:root:/:'#{v}' "
   end
-  exec("#{@siab_home}/bin/shellinaboxd --background='#{@siab_home}/siab.pid' -c /tmp #{command_line}") if fork.nil?
+  exec("#{@siab_home}/bin/webtermd --background='#{@siab_home}/siab.pid' -c /tmp #{command_line}") if fork.nil?
 end
 
 def stop()

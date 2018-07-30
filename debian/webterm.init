@@ -1,6 +1,6 @@
 #!/bin/sh
 ### BEGIN INIT INFO
-# Provides:          shellinabox
+# Provides:          webterm
 # Required-Start:    $network $remote_fs
 # Required-Stop:     $network $remote_fs
 # Default-Start:     2 3 4 5
@@ -16,9 +16,9 @@
 # PATH should only include /usr/* if it runs after the mountnfs.sh script
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
 DESC="Shell In A Box Daemon"
-NAME="shellinabox"
-DAEMON="/usr/bin/shellinaboxd"
-PIDFILE="/var/run/shellinaboxd.pid"
+NAME="webterm"
+DAEMON="/usr/bin/webtermd"
+PIDFILE="/var/run/webtermd.pid"
 SCRIPTNAME=/etc/init.d/$NAME
 
 # Exit if the package is not installed
@@ -35,10 +35,10 @@ SCRIPTNAME=/etc/init.d/$NAME
 . /lib/lsb/init-functions
 
 # Set some default values
-SHELLINABOX_DATADIR="${SHELLINABOX_DATADIR:-/var/lib/shellinabox}"
+SHELLINABOX_DATADIR="${SHELLINABOX_DATADIR:-/var/lib/webterm}"
 SHELLINABOX_PORT="${SHELLINABOX_PORT:-4200}"
-SHELLINABOX_USER="${SHELLINABOX_USER:-shellinabox}"
-SHELLINABOX_GROUP="${SHELLINABOX_GROUP:-shellinabox}"
+SHELLINABOX_USER="${SHELLINABOX_USER:-webterm}"
+SHELLINABOX_GROUP="${SHELLINABOX_GROUP:-webterm}"
 
 #
 #       Function that starts the daemon/service.
@@ -53,11 +53,11 @@ d_start() {
                     --exec "'$DAEMON'" -- -q --background="'$PIDFILE'"        \
                     -c "'${SHELLINABOX_DATADIR}'" -p "'${SHELLINABOX_PORT}'"  \
                     -u "'${SHELLINABOX_USER}'" -g "'${SHELLINABOX_GROUP}'"    \
-                    $(for i in $(ls /etc/shellinabox/options-enabled/*.css |
+                    $(for i in $(ls /etc/webterm/options-enabled/*.css |
                                  sed -e                                       \
                                     's/.*[/]\([0-9]*\)[-_+][^/:,;]*[.]css/\1/'|
                                  sort -u); do
-                        for j in /etc/shellinabox/options-enabled/"$i"*.css; do
+                        for j in /etc/webterm/options-enabled/"$i"*.css; do
                           echo -n "$j" |
                           sed -e 's/\(.*[/]\)\([0-9]*\)\([-_+]\)\([^/:,;]*\)[.]css/\4:\3\1\2\3\4.css,/
                                   s/:_/:-/'

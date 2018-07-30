@@ -1,5 +1,5 @@
 #!/bin/sh
-# postrm script for shellinabox
+# postrm script for webterm
 #
 # see: dh_installdeb(1)
 
@@ -23,15 +23,15 @@ set -e
 
 #DEBHELPER#
 
-d=/var/lib/shellinabox
+d=/var/lib/webterm
 
 case "$1" in
     remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
     ;;
 
     purge)
-        deluser  --quiet --system shellinabox > /dev/null || true
-        delgroup --quiet --system shellinabox > /dev/null || true
+        deluser  --quiet --system webterm > /dev/null || true
+        delgroup --quiet --system webterm > /dev/null || true
 	[ ! -d "$d" ] || rmdir "$d" || true    # deluser can't do this for /var
 	exit 0
     ;;

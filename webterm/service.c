@@ -51,9 +51,9 @@
 #include <unistd.h>
 
 #include "logging/logging.h"
-#include "shellinabox/launcher.h"
-#include "shellinabox/privileges.h"
-#include "shellinabox/service.h"
+#include "webterm/launcher.h"
+#include "webterm/privileges.h"
+#include "webterm/service.h"
 
 #ifdef HAVE_UNUSED
 #defined ATTR_UNUSED __attribute__((unused))

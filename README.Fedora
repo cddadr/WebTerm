@@ -6,7 +6,7 @@ some tips on getting things working:
 
 - avoid using the default "LOGIN" service. Calling /bin/login does not do
   the right thing.
-  The "LOGIN" service is the default service when running "shellinaboxd" as
+  The "LOGIN" service is the default service when running "webtermd" as
   "root". This means, you will most likely see all logins failing, whenever
   you start the daemon as "root".
   To fix this problem, consider explicitly specifying a service definition.
@@ -18,15 +18,15 @@ some tips on getting things working:
 
 - Alternatively, consider running "./configure --disable-login" before building
   the daemon. This will completely remove support for the "LOGIN" service, and
-  shellinaboxd will instead use a default "SSH" service for both unprivileged
+  webtermd will instead use a default "SSH" service for both unprivileged
   and for "root" users.
 
-- On Fedora, PAM authentication does not work for shellinabox until you
+- On Fedora, PAM authentication does not work for webterm until you
   explicitly configure it. This means, using "AUTH" in the service definition
   will not allow you to log in.
-  You can fix this by defining a proper "/etc/pam.d/shellinabox" file. Take a
-  look at "etc-pam.d-shellinabox-example" for a working example.
+  You can fix this by defining a proper "/etc/pam.d/webterm" file. Take a
+  look at "etc-pam.d-webterm-example" for a working example.
   Make sure you assign the correct SELinux labels to this file when copying
   it into "/etc/pam.d":
-    cp -Z system_u:object_r:etc_t:s0 etc-pam.d-shellinabox-example /etc/pam.d/
+    cp -Z system_u:object_r:etc_t:s0 etc-pam.d-webterm-example /etc/pam.d/
 

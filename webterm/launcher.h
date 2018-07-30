@@ -46,8 +46,8 @@
 #ifndef LAUNCHER_H__
 #define LAUNCHER_H__
 
-#include "shellinabox/launcher.h"
-#include "shellinabox/session.h"
+#include "webterm/launcher.h"
+#include "webterm/session.h"
 #include "logging/logging.h"
 
 

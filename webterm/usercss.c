@@ -54,7 +54,7 @@
 #include <unistd.h>
 
 #include "logging/logging.h"
-#include "shellinabox/usercss.h"
+#include "webterm/usercss.h"
 #include "libhttp/hashmap.h"
 
 #ifdef HAVE_UNUSED

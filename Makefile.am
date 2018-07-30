@@ -5,8 +5,8 @@ AM_LDFLAGS           = -g -lm
 noinst_LTLIBRARIES   = libhttp.la                                             \
                        liblogging.la
 noinst_DATA          = $(top_srcdir)/demo/demo.js
-bin_PROGRAMS         = shellinaboxd
-man_MANS             = shellinaboxd.1
+bin_PROGRAMS         = webtermd
+man_MANS             = webtermd.1
 noinst_HEADERS       = libhttp/http.h
 dist_doc_DATA        = AUTHORS                                                \
                        COPYING                                                \
@@ -16,10 +16,10 @@ dist_doc_DATA        = AUTHORS                                                \
                        NEWS                                                   \
                        README                                                 \
                        TODO                                                   \
-                       shellinabox/white-on-black.css                         \
-                       shellinabox/black-on-white.css                         \
-                       shellinabox/monochrome.css                             \
-                       shellinabox/color.css
+                       webterm/white-on-black.css                         \
+                       webterm/black-on-white.css                         \
+                       webterm/monochrome.css                             \
+                       webterm/color.css
 EXTRA_DIST           = INSTALL.Debian                                         \
                        README.Fedora                                          \
                        demo/beep.wav                                          \
@@ -38,11 +38,11 @@ EXTRA_DIST           = INSTALL.Debian                                         \
                        demo/usercss-1.css                                     \
                        demo/usercss-2.css                                     \
                        demo/usercss-3.css                                     \
-                       etc-pam.d-shellinabox-example                          \
-                       shellinabox/shellinaboxd.man.in                        \
-                       shellinabox/shell_in_a_box.js                          \
-                       shellinabox/vt100.js                                   \
-                       shellinabox/cgi-mode-example.sh                        \
+                       etc-pam.d-webterm-example                          \
+                       webterm/webtermd.man.in                        \
+                       webterm/shell_in_a_box.js                          \
+                       webterm/vt100.js                                   \
+                       webterm/cgi-mode-example.sh                        \
                        debian/README                                          \
                        debian/README.available                                \
                        debian/README.enabled                                  \
@@ -52,12 +52,12 @@ EXTRA_DIST           = INSTALL.Debian                                         \
                        debian/copyright                                       \
                        debian/docs                                            \
                        debian/rules                                           \
-                       debian/shellinabox.default                             \
-                       debian/shellinabox.dirs                                \
-                       debian/shellinabox.init                                \
-                       debian/shellinabox.install                             \
-                       debian/shellinabox.postinst                            \
-                       debian/shellinabox.postrm                              \
+                       debian/webterm.default                             \
+                       debian/webterm.dirs                                \
+                       debian/webterm.init                                \
+                       debian/webterm.install                             \
+                       debian/webterm.postinst                            \
+                       debian/webterm.postrm                              \
                        debian/source/format                                   \
                        debian/watch
 LIBLOGGING_INCLUDES  = logging/logging.h                                      \
@@ -84,49 +84,49 @@ libhttp_la_SOURCES   = libhttp/hashmap.c                                      \
 libhttp_la_LDFLAGS   = -export-symbols  $(top_srcdir)/libhttp/libhttp.sym     \
                        -version 1:0:0
 
-shellinaboxd_SOURCES = shellinabox/shellinaboxd.c                             \
-                       shellinabox/externalfile.c                             \
-                       shellinabox/externalfile.h                             \
-                       shellinabox/launcher.c                                 \
-                       shellinabox/launcher.h                                 \
-                       shellinabox/privileges.c                               \
-                       shellinabox/privileges.h                               \
-                       shellinabox/service.c                                  \
-                       shellinabox/service.h                                  \
-                       shellinabox/session.c                                  \
-                       shellinabox/session.h                                  \
-                       shellinabox/usercss.c                                  \
-                       shellinabox/usercss.h                                  \
-                       shellinabox/cgi_root.html                              \
-                       shellinabox/root_page.html                             \
-                       shellinabox/vt100.jspp                                 \
-                       shellinabox/shell_in_a_box.jspp                        \
-                       shellinabox/styles.css                                 \
-                       shellinabox/print-styles.css                           \
-                       shellinabox/enabled.gif                                \
-                       shellinabox/favicon.ico                                \
-                       shellinabox/keyboard.png                               \
-                       shellinabox/keyboard-layout.html                       \
-                       shellinabox/beep.wav                                   \
+webtermd_SOURCES = webterm/webtermd.c                             \
+                       webterm/externalfile.c                             \
+                       webterm/externalfile.h                             \
+                       webterm/launcher.c                                 \
+                       webterm/launcher.h                                 \
+                       webterm/privileges.c                               \
+                       webterm/privileges.h                               \
+                       webterm/service.c                                  \
+                       webterm/service.h                                  \
+                       webterm/session.c                                  \
+                       webterm/session.h                                  \
+                       webterm/usercss.c                                  \
+                       webterm/usercss.h                                  \
+                       webterm/cgi_root.html                              \
+                       webterm/root_page.html                             \
+                       webterm/vt100.jspp                                 \
+                       webterm/shell_in_a_box.jspp                        \
+                       webterm/styles.css                                 \
+                       webterm/print-styles.css                           \
+                       webterm/enabled.gif                                \
+                       webterm/favicon.ico                                \
+                       webterm/keyboard.png                               \
+                       webterm/keyboard-layout.html                       \
+                       webterm/beep.wav                                   \
                        config.h
-BUILT_SOURCES        = shellinabox/beep.h                                     \
-                       shellinabox/cgi_root.h                                 \
-                       shellinabox/enabled.h                                  \
-                       shellinabox/favicon.h                                  \
-                       shellinabox/keyboard.h                                 \
-                       shellinabox/keyboard-layout.h                          \
-                       shellinabox/print-styles.h                             \
-                       shellinabox/root_page.h                                \
-                       shellinabox/shell_in_a_box.h                           \
-                       shellinabox/shell_in_a_box.js                          \
-                       shellinabox/styles.h                                   \
-                       shellinabox/vt100.h                                    \
-                       shellinabox/vt100.js
+BUILT_SOURCES        = webterm/beep.h                                     \
+                       webterm/cgi_root.h                                 \
+                       webterm/enabled.h                                  \
+                       webterm/favicon.h                                  \
+                       webterm/keyboard.h                                 \
+                       webterm/keyboard-layout.h                          \
+                       webterm/print-styles.h                             \
+                       webterm/root_page.h                                \
+                       webterm/shell_in_a_box.h                           \
+                       webterm/shell_in_a_box.js                          \
+                       webterm/styles.h                                   \
+                       webterm/vt100.h                                    \
+                       webterm/vt100.js
 
 
-shellinaboxd_LDADD   = liblogging.la                                          \
+webtermd_LDADD   = liblogging.la                                          \
                        libhttp.la
-shellinaboxd_LDFLAGS = -static
+webtermd_LDFLAGS = -static
 
 symbolname           =                                                        \
   sed -e 's/.*\/\([^.]*\)[.].*/\1/'                                           \
@@ -158,57 +158,57 @@ ${top_srcdir}/demo/demo.js: ${top_srcdir}/demo/beep.wav                       \
                             ${top_srcdir}/demo/usercss-2.css                  \
                             ${top_srcdir}/demo/usercss-3.css
 
-${top_srcdir}/demo/beep.wav: ${top_srcdir}/shellinabox/beep.wav
+${top_srcdir}/demo/beep.wav: ${top_srcdir}/webterm/beep.wav
 	@rm -f "$@"
 	ln "$?" "$@"
 
-${top_srcdir}/demo/enabled.gif: ${top_srcdir}/shellinabox/enabled.gif
+${top_srcdir}/demo/enabled.gif: ${top_srcdir}/webterm/enabled.gif
 	@rm -f "$@"
 	ln "$?" "$@"
 
-${top_srcdir}/demo/favicon.ico: ${top_srcdir}/shellinabox/favicon.ico
+${top_srcdir}/demo/favicon.ico: ${top_srcdir}/webterm/favicon.ico
 	@rm -f "$@"
 	ln "$?" "$@"
 
-${top_srcdir}/demo/keyboard.html: ${top_srcdir}/shellinabox/keyboard-layout.html
+${top_srcdir}/demo/keyboard.html: ${top_srcdir}/webterm/keyboard-layout.html
 	@rm -f "$@"
 	ln "$?" "$@"
 
-${top_srcdir}/demo/keyboard.png: ${top_srcdir}/shellinabox/keyboard.png
+${top_srcdir}/demo/keyboard.png: ${top_srcdir}/webterm/keyboard.png
 	@rm -f "$@"
 	ln "$?" "$@"
 
-${top_srcdir}/demo/styles.css: ${top_srcdir}/shellinabox/styles.css
+${top_srcdir}/demo/styles.css: ${top_srcdir}/webterm/styles.css
 	@rm -f "$@"
 	sed -e '/\[if DEFINES_COLORS\]/,/\[endif DEFINES_COLORS\]/d' "$?" >"$@"
 
-${top_srcdir}/demo/print-styles.css: ${top_srcdir}/shellinabox/print-styles.css
+${top_srcdir}/demo/print-styles.css: ${top_srcdir}/webterm/print-styles.css
 	@rm -f "$@"
 	ln "$?" "$@"
 
-${top_srcdir}/demo/usercss-0.css: ${top_srcdir}/shellinabox/white-on-black.css
+${top_srcdir}/demo/usercss-0.css: ${top_srcdir}/webterm/white-on-black.css
 	@rm -f "$@"
 	ln "$?" "$@"
 
-${top_srcdir}/demo/usercss-1.css: ${top_srcdir}/shellinabox/black-on-white.css
+${top_srcdir}/demo/usercss-1.css: ${top_srcdir}/webterm/black-on-white.css
 	@rm -f "$@"
 	ln "$?" "$@"
 
-${top_srcdir}/demo/usercss-2.css: ${top_srcdir}/shellinabox/monochrome.css
+${top_srcdir}/demo/usercss-2.css: ${top_srcdir}/webterm/monochrome.css
 	@rm -f "$@"
 	ln "$?" "$@"
 
-${top_srcdir}/demo/usercss-3.css: ${top_srcdir}/shellinabox/color.css
+${top_srcdir}/demo/usercss-3.css: ${top_srcdir}/webterm/color.css
 	@rm -f "$@"
 	ln "$?" "$@"
 
-${top_srcdir}/demo/vt100.js: ${top_srcdir}/shellinabox/vt100.js
+${top_srcdir}/demo/vt100.js: ${top_srcdir}/webterm/vt100.js
 	@rm -f "$@"
 	ln "$?" "$@"
 
-shellinaboxd.1: ${top_srcdir}/shellinabox/shellinaboxd.man.in                 \
+webtermd.1: ${top_srcdir}/webterm/webtermd.man.in                 \
 		${top_srcdir}/config.h
-	@src="${top_srcdir}/shellinabox/shellinaboxd.man.in";                 \
+	@src="${top_srcdir}/webterm/webtermd.man.in";                 \
 	echo preprocess  "$$src" '>'"$@";                                     \
 	if sed -e 's/^#define \([^ ]*\).*/\1/' -e t -e d config.h |           \
              grep 'HAVE_BIN_LOGIN' >/dev/null 2>&1; then                      \
@@ -239,23 +239,23 @@ shellinaboxd.1: ${top_srcdir}/shellinabox/shellinaboxd.man.in                 \
 	man -Tps "./$@" >"$${out}" 2>/dev/null || rm -f "$${out}"
 
 clean-local:
-	-rm -rf shellinaboxd.1                                                \
-	        shellinaboxd.ps
-	-rm -rf debian/shellinabox                                            \
-	        debian/shellinabox*.debhelper*                                \
-	        debian/shellinabox.substvars                                  \
+	-rm -rf webtermd.1                                                \
+	        webtermd.ps
+	-rm -rf debian/webterm                                            \
+	        debian/webterm*.debhelper*                                \
+	        debian/webterm.substvars                                  \
 	        debian/tmp
-	-rm -rf shellinabox/beep.h                                            \
-	        shellinabox/cgi_root.h      				      \
-	        shellinabox/enabled.h       				      \
-	        shellinabox/favicon.h       				      \
-	        shellinabox/keyboard.h      				      \
-	        shellinabox/keyboard-layout.h				      \
-	        shellinabox/print-styles.h  				      \
-	        shellinabox/root_page.h     				      \
-	        shellinabox/shell_in_a_box.h				      \
-	        shellinabox/styles.h                                          \
-	        shellinabox/vt100.h
+	-rm -rf webterm/beep.h                                            \
+	        webterm/cgi_root.h      				      \
+	        webterm/enabled.h       				      \
+	        webterm/favicon.h       				      \
+	        webterm/keyboard.h      				      \
+	        webterm/keyboard-layout.h				      \
+	        webterm/print-styles.h  				      \
+	        webterm/root_page.h     				      \
+	        webterm/shell_in_a_box.h				      \
+	        webterm/styles.h                                          \
+	        webterm/vt100.h
 
 .css.h:
 	@echo od "$<" '>'"$@"

@@ -56,7 +56,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#include "shellinabox/privileges.h"
+#include "webterm/privileges.h"
 #include "logging/logging.h"
 
 int   runAsUser  = -1;

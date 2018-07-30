@@ -1,4 +1,4 @@
-Source: shellinabox
+Source: webterm
 Section: web
 Priority: optional
 Maintainer: Marc Singer <elf@debian.org>
@@ -6,10 +6,10 @@ Build-Depends: debhelper (>= 8.0.0), autotools-dev, binutils,
  libssl-dev, libpam0g-dev, zlib1g-dev
 Standards-Version: 3.9.3
 Homepage: http://shellinabox.com
-Vcs-Git: https://code.google.com/p/shellinabox/
-Vcs-Browser: https://code.google.com/p/shellinabox/source/browse/
+Vcs-Git: https://code.google.com/p/webterm/
+Vcs-Browser: https://code.google.com/p/webterm/source/browse/
 
-Package: shellinabox
+Package: webterm
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, adduser, lsb-base
 Suggests: openssl

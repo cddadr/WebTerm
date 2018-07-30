@@ -114,9 +114,9 @@ typedef struct pam_handle pam_handle_t;
 #define strncat(a,b,c) ({ char *_a = (a); strlcat(_a, (b), (c)+1); _a; })
 #endif
 
-#include "shellinabox/launcher.h"
-#include "shellinabox/privileges.h"
-#include "shellinabox/service.h"
+#include "webterm/launcher.h"
+#include "webterm/privileges.h"
+#include "webterm/service.h"
 #include "libhttp/hashmap.h"
 #include "logging/logging.h"
 
@@ -1039,7 +1039,7 @@ static pam_handle_t *internalLogin(struct Service *service, struct Utmp *utmp,
     struct pam_conv conv       = { .conv = misc_conv };
     if (service->authUser) {
       check(supportsPAM());
-      check(pam_start("shellinabox", NULL, &conv, &pam) == PAM_SUCCESS);
+      check(pam_start("webterm", NULL, &conv, &pam) == PAM_SUCCESS);
 
       const char *origPrompt;
       check(pam_get_item(pam, PAM_USER_PROMPT, (void *)&origPrompt) ==
@@ -1090,7 +1090,7 @@ static pam_handle_t *internalLogin(struct Service *service, struct Utmp *utmp,
       check(service->user);
       check(service->group);
       if (supportsPAM()) {
-        check(pam_start("shellinabox", service->user, &conv, &pam) ==
+        check(pam_start("webterm", service->user, &conv, &pam) ==
               PAM_SUCCESS);
         int rc;
 

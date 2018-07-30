@@ -1,5 +1,5 @@
 '\" t
-.\" shellinaboxd.man -- Make command line applications available as AJAX web applications
+.\" webtermd.man -- Make command line applications available as AJAX web applications
 .\" Copyright (C) 2008-2010 Markus Gutschke <markus@shellinabox.com>
 .\"
 .\" This program is free software; you can redistribute it and/or modify
@@ -46,10 +46,10 @@
 .\"
 .TH SHELLINABOXD 1 "Sep 11, 2010"
 .SH NAME
-shellinaboxd \- publish command line shell through AJAX interface
+webtermd \- publish command line shell through AJAX interface
 .SH SYNOPSIS
 .TP
-.B shellinaboxd
+.B webtermd
 [\ \fB-b\fP\ | \fB--background\fP[\fB=\fP\fIpidfile\fP]\ ]
 #ifdef HAVE_OPENSSL
 [\ \fB-c\fP\ | \fB--cert=\fP\fIcertdir\fP\ ]
@@ -79,7 +79,7 @@ shellinaboxd \- publish command line shell through AJAX interface
 [\ \fB--version\fP\ ]
 .SH DESCRIPTION
 The
-.B shellinaboxd
+.B webtermd
 daemon implements a webserver that listens on the specified
 .IR port .
 The web server publishes one or more
@@ -104,7 +104,7 @@ The following command line parameters control the operation of the daemon:
 .TP \w'\-b\ |\ 'u
 \fB-b\fP\ | \fB--background\fP[\fB=\fP\fIpidfile\fP]
 Launch
-.B shellinaboxd
+.B webtermd
 as a background daemon process. Optionally, write the process id to
 .IR pidfile .
 #ifdef HAVE_OPENSSL
@@ -135,7 +135,7 @@ there is a generic
 file.
 
 If no suitable certificate is installed,
-.B shellinaboxd
+.B webtermd
 will attempt to invoke
 .B /usr/bin/openssl
 and create a new self-signed certificate. This only succeeds if, after
@@ -176,7 +176,7 @@ option can be given on the same command line.
 .TP
 \fB--cgi\fP[\fB=\fP\fIportrange\fP]
 Instead of running
-.B shellinaboxd
+.B webtermd
 as a permanent process, it can be demand-loaded as a CGI web server
 extension. When doing so, it will spawn a server that lives for the
 duration of the user's session. If an optional
@@ -196,7 +196,7 @@ and
 options.
 
 In order to be useful as a CGI script, the
-.B shellinaboxd
+.B webtermd
 binary probably will have to be made
 .BR setuid-root .
 This is currently a discouraged configuration. Use with care. 
@@ -256,7 +256,7 @@ in an
 Instead of a
 .IR file ,
 it is possible to provide the name of a directory. This turns
-.B shellinaboxd
+.B webtermd
 into a simple web server that publishes all of the files in that
 particular directory. This option can be helpful when publishing a more
 complex root HTML page.
@@ -293,7 +293,7 @@ recognized, even if not preceded by a protocol.
 .TP
 \fB--localhost-only\fP
 Normally, 
-.B shellinaboxd
+.B webtermd
 listens on all available network interfaces. When operating behind a
 reverse-proxy that is not always desirable. This command line option
 tells the daemon to only listen on the loopback interface.
@@ -316,7 +316,7 @@ to request logging of numeric IP addresses, instead.
 .TP
 \fB--pidfile=\fP\fIpidfile\fP
 The
-.B shellinaboxd
+.B webtermd
 daemon can be configured to store its process identifier in
 .IR pidfile .
 .TP
@@ -324,7 +324,7 @@ daemon can be configured to store its process identifier in
 Unless overridden by this option, the web server listens on port 4200
 for incoming HTTP and HTTPS requests.
 
-.B shellinaboxd
+.B webtermd
 can distinguish between SSL/TLS requests and unencrypted requests. It
 also knows how to negotiate
 .B Server Name
@@ -383,7 +383,7 @@ if no
 .B --service
 was defined. This operation is available to both privileged and regular
 users. If the optional \fIhost\fP parameter is omitted,
-.B shellinaboxd
+.B webtermd
 connects to
 .BR localhost .
 
@@ -420,7 +420,7 @@ can be the user's home directory:
 .in
 
 The command that
-.B shellinaboxd
+.B webtermd
 executes can either be specified as the 'SHELL' keyword, denoting the user's
 default login shell, or an arbitrary command line:
 .in +4
@@ -471,7 +471,7 @@ The <cmdline> supports single and double quotes, as well as
 backslashes for escaping characters in the familiar fashion.
 
 Please note that when invoking
-.B shellinaboxd
+.B webtermd
 from a command line shell, additional quoting might be required to
 prevent the shell from expanding the variables prior to passing them
 to the daemon.
@@ -479,7 +479,7 @@ to the daemon.
 If no explicit
 .B --service
 has been requested,
-.B shellinaboxd
+.B webtermd
 defaults to attaching the default service to the root directory of the web
 server. For
 .BR root ,
@@ -496,7 +496,7 @@ respectively.
 .TP
 \fB-t\fP\ |\ \fB--disable-ssl\fP
 By default,
-.B shellinaboxd
+.B webtermd
 redirectes all incoming HTTP requests to their equivalent HTTPS
 URLs. If promoting of connections to encrypted SSL/TLS sessions is
 undesired, this behavior can be disabled.
@@ -588,10 +588,10 @@ There are no configuration files or permanent settings for
 #endif
 #ifdef DPKGBUILD
 Except for the options in
-.I /etc/default/shellinabox
+.I /etc/default/webterm
 that are used when running the daemon as a system-wide service, and
 except for the style sheet definitions in
-.IR /etc/shellinabox ,
+.IR /etc/webterm ,
 there are no other configuration options.
 #endif
 
@@ -601,7 +601,7 @@ button. These options get persisted in a browser cookie.
 
 Many sites already have a web server running and would like to
 integrate
-.B shellinaboxd
+.B webtermd
 into their existing site. This is most commonly done by means of a
 reverse-proxy entry for the main web server. For
 .I Apache
@@ -622,15 +622,15 @@ When using a reverse proxy, the
 option would normally be enabled as well.
 #ifdef DPKGBUILD
 This can be done in
-.IR /etc/default/shellinabox .
+.IR /etc/default/webterm .
 #endif
 In addition, the
 .B --disable-ssl
 might also be considered depending on the exact configuration details
 of the reverse proxy.
 .SH EXAMPLES
-.TP \w'shellinaboxd\ 'u
-.B shellinaboxd
+.TP \w'webtermd\ 'u
+.B webtermd
 Attaches a web-enabled login shell to
 .IR https://localhost:4200/ .
 If the user connected without SSL, the session will automatically be promoted.
@@ -642,30 +642,30 @@ instead of
 .B /bin/login
 for the session.
 .TP
-.B shellinaboxd -t
+.B webtermd -t
 Attaches a web-enabled login shell to
 .I http://localhost:4200/
 with SSL/TLS support disabled.
 .TP
-.B shellinaboxd -t -f beep.wav:/dev/null
+.B webtermd -t -f beep.wav:/dev/null
 Runs all services with the audible-bell permanently disabled.
 .TP
-.B shellinaboxd -s /:SSH:example.org
+.B webtermd -s /:SSH:example.org
 The terminal connects to a
 .B ssh
 session on
 .IR example.org .
 .TP
-.B shellinaboxd -t -s /:AUTH:HOME:/bin/bash
+.B webtermd -t -s /:AUTH:HOME:/bin/bash
 Interactively request the user's name and password prior to launching
 a Bourne shell. This command can be run by unprivileged users. But if
 doing so, it only allows this particular user to log in.
 .TP
-.B shellinaboxd -c certificates -u shellinabox -g shellinabox
+.B webtermd -c certificates -u webterm -g webterm
 If the
 .B certificates
 directory exists and is writable by the
-.B shellinabox
+.B webterm
 user and group, self-signed SSL certificates will be generated in this
 directory. This might require creating an appropriately named user first.
 Running this command as
@@ -674,7 +674,7 @@ allows any user on the system to log in at
 .BR http://localhost:4200/ .
 Sessions will automatically be promoted to SSL/TLS.
 .TP
-.B shellinaboxd -t -s /:LOGIN -s /who:nobody:nogroup:/:w
+.B webtermd -t -s /:LOGIN -s /who:nobody:nogroup:/:w
 In addition to the login shell at
 .IR http://localhost:4200 ,
 show a list of currently logged in users when accessing
@@ -685,7 +685,7 @@ in order to be able to change to
 .B nobody:nogroup
 as requested by the service description.
 .TP
-.B shellinaboxd -t -s '/:root:root:/:wy60 -c /bin/login'
+.B webtermd -t -s '/:root:root:/:wy60 -c /bin/login'
 Instead of the standard
 .B ANSI/VT100
 terminal, publish a
@@ -694,10 +694,10 @@ terminal. Again, this command should be run as
 .BR root .
 .TP
 #ifndef DPKGBUILD
-.B shellinaboxd --css white-on-black.css
+.B webtermd --css white-on-black.css
 #endif
 #ifdef DPKGBUILD
-.B shellinaboxd --css '/etc/shellinabox/options-available/00_White On Black.css'
+.B webtermd --css '/etc/webterm/options-available/00_White On Black.css'
 #endif
 Loads the
 #ifndef DPKGBUILD
@@ -715,16 +715,16 @@ and appends it to the built-in
 sheet. This causes the terminal to always render white text on a black
 background.
 .TP
-.B shellinaboxd --user-css Normal:+black-on-white.css,Reverse:-white-on-black.css
+.B webtermd --user-css Normal:+black-on-white.css,Reverse:-white-on-black.css
 Allow the user to select whether they want text to be rendered
 normally or in reverse video. This command line option adds a new
 entry to the right-click context menu.
 #ifdef DPKGBUILD
 
 If starting
-.B shellinaboxd
+.B webtermd
 as a system process, the
-.I /etc/init.d/shellinabox
+.I /etc/init.d/webterm
 script looks in
 .I /etc/shell\%in\%a\%box/op\%tions-\%en\%abled
 for style sheets that should be added to the command line. See the
@@ -748,33 +748,33 @@ certificates to the certification directory.
 #ifdef DPKGBUILD
 .SH FILES
 .TP 10
-.I /etc/default/shellinabox
+.I /etc/default/webterm
 The system-wide installation of
-.B shellinaboxd
+.B webtermd
 can be configured by editing this file. After making any changes, restart
-the daemon with \fBsudo service shellinabox restart\fP.
+the daemon with \fBsudo service webterm restart\fP.
 .TP
-.I /etc/shellinabox
+.I /etc/webterm
 This directory contains style sheets that will be used for the
 .B --user-css 
 command line option, when running
-.B shellinaboxd
+.B webtermd
 as a system-wide service.
 .TP
-.I /etc/init.d/shellinabox
+.I /etc/init.d/webterm
 This is the system-wide service definition. Usually, there is no need to
 edit this file.
 .TP
-.I /var/lib/shellinabox
+.I /var/lib/webterm
 This directory contains the certificate files that
-.B shellinaboxd
+.B webtermd
 uses when serving encrypted SSL sessions. If suitable files do not exist, yet,
 it tries to populate the directory with self-signed certificates the first
 time a particular certificate is needed. Over time, it should contain
 \fBcertificate.pem\fP, \fBcertificate-localhost.pem\fP, and
 \fBcertificate-\fP\fIHOSTNAME\fP\fB.pem\fP.
 .TP
-.I /var/run/shellinaboxd.pid
+.I /var/run/webtermd.pid
 This file is created any time the system-wide service gets started.
 #endif
 .SH "SEE ALSO"
@@ -845,7 +845,7 @@ author.
 .P
 If the OpenSSL
 system libraries can be found at run-time, they will be invoked by
-.B shellinaboxd
+.B webtermd
 to provide SSL/TLS support. The OpenSSL and SSLeay
 licenses require the following notices:
 .P

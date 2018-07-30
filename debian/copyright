@@ -1,6 +1,6 @@
 Format: http://dep.debian.net/deps/dep5
-Upstream-Name: shellinabox
-Source: <https://code.google.com/p/shellinabox/>
+Upstream-Name: webterm
+Source: <https://code.google.com/p/webterm/>
 
 Files: *
 Copyright: Copyright 2008-2012, Markus Gutschke  All rights reserved.

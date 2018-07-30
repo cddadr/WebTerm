@@ -10,7 +10,7 @@ man_MANS             = shellinaboxd.1
 noinst_HEADERS       = libhttp/http.h
 dist_doc_DATA        = AUTHORS                                                \
                        COPYING                                                \
-                       GPL-2                                                  \
+                       LICENSE                                                  \
                        ChangeLog                                              \
                        INSTALL                                                \
                        NEWS                                                   \

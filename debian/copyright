@@ -5,7 +5,7 @@ Source: <https://code.google.com/p/shellinabox/>
 Files: *
 Copyright: Copyright 2008-2012, Markus Gutschke  All rights reserved.
 Upstream-Author: markus@shellinabox.com
-License: GPL-2+
+License: LICENSE+
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License version 2 as
   published by the Free Software Foundation.
@@ -19,7 +19,7 @@ License: GPL-2+
   with this program; if not, write to the Free Software Foundation, Inc.,
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
   .
-  See /usr/share/common-licenses/GPL-2 on your Debian system.
+  See /usr/share/common-licenses/LICENSE on your Debian system.
   .
   In addition to these license terms, the author grants the following
   additional rights:
